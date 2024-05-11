@@ -15,7 +15,8 @@ Products
                         <select name="category" id="category" class="form-control">
                             <option value="">All Categories</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }} ({{ $productCounts[$category->id] ?? 0 }})</option>
+                                {{-- <option value="{{ $category->id }}">{{ $category->name }}</option> --}}
                             @endforeach
                         </select>
                     </div>
@@ -105,5 +106,13 @@ Products
             {!! $products->onEachSide(1)->links('pagination::bootstrap-4') !!}
         </div>
     </div>
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Total de productos: {{ $totalProductCount }}</h2>
+            <!-- Rest of your products display code -->
+        </div>
+    </div>
+</div>
 </div>
 @endsection

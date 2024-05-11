@@ -66,7 +66,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $categories->withQueryString()->links() !!}
+            {!! $categories->onEachSide(1)->links('pagination::bootstrap-4') !!}
             </div>
         </div>
     </div>

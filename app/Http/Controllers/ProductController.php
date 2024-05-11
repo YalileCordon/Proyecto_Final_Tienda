@@ -25,15 +25,40 @@ class ProductController extends Controller
     //     return view('product.index', compact('products'))
     //         ->with('i', ($request->input('page', 1) - 1) * $products->perPage());
     // }
+    // public function index(Request $request): View
+    // {
+    //     $products = Product::paginate(3);
+    //     $categoryController = new CategoryController();
+    //     $categories = $categoryController->getAllCategories();
+
+    //     return view('product.index', [
+    //         'products' => $products,
+    //         'categories' => $categories,
+    //         'i' => ($request->input('page', 1) - 1) * $products->perPage(),
+    //     ]);
+
+    // }
+
     public function index(Request $request): View
     {
         $products = Product::paginate(3);
         $categoryController = new CategoryController();
         $categories = $categoryController->getAllCategories();
 
+        // Get product count per category
+        $productCounts = [];
+        foreach ($categories as $category) {
+            $productCounts[$category->id] = Product::where('category_id', $category->id)->count();
+        }
+
+        // Get total product count
+        $totalProductCount = Product::count();
+
         return view('product.index', [
             'products' => $products,
             'categories' => $categories,
+            'productCounts' => $productCounts,
+            'totalProductCount' => $totalProductCount,
             'i' => ($request->input('page', 1) - 1) * $products->perPage(),
         ]);
     }
@@ -55,13 +80,50 @@ class ProductController extends Controller
         // Obtener los productos paginados
         $products = $productsQuery->paginate(3);
 
+        // Get product count per category
+        $productCounts = [];
+        foreach ($categories as $category) {
+            $productCounts[$category->id] = Product::where('category_id', $category->id)->count();
+        }
+
+        // Get total product count
+        $totalProductCount = Product::count();
+
         return view('product.index', [
             'products' => $products,
             'selectedCategory' => $categoryId,
             'categories' => $categories,
-            'i' => ($request->input('page', 1) - 1) * $products->perPage(3),
+            'productCounts' => $productCounts,
+            'totalProductCount' => $totalProductCount,
+            'i' => ($request->input('page', 1) - 1) * $products->perPage(),
         ]);
     }
+
+
+
+    // public function showByCategory(Request $request): View
+    // {
+    //     // Obtener el ID de la categoría seleccionada desde la solicitud
+    //     $categoryId = $request->input('category');
+    //     $categoryController = new CategoryController();
+    //     $categories = $categoryController->getAllCategories();
+
+    //     // Filtrar los productos por el ID de la categoría si se ha seleccionado una categoría
+    //     $productsQuery = Product::query();
+    //     if ($categoryId) {
+    //         $productsQuery->where('category_id', $categoryId);
+    //     }
+
+    //     // Obtener los productos paginados
+    //     $products = $productsQuery->paginate(3);
+
+    //     return view('product.index', [
+    //         'products' => $products,
+    //         'selectedCategory' => $categoryId,
+    //         'categories' => $categories,
+    //         'i' => ($request->input('page', 1) - 1) * $products->perPage(3),
+    //     ]);
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -97,7 +159,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    
+
 
     /**
      * Show the form for editing the specified resource.

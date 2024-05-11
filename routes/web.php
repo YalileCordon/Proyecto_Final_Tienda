@@ -9,7 +9,7 @@ use App\Http\Controllers\UserController;
 
 Auth::routes();
 
-Route::resource('/', CategoryController::class);
+Route::resource('/', ProductController::class);
 
 Auth::routes();
 
