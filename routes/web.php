@@ -8,10 +8,13 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\UserController;
 
 Auth::routes();
+//Route::get('/products/{slug}','ProductController@show')->name('products.show');
 
 Route::resource('/', ProductController::class);
 
 Auth::routes();
+
+Route::get('/products', [ProductController::class, 'show'])->name('products.show');
 
 Route::get('/products/by-category', [ProductController::class, 'showByCategory'])->name('products.showByCategory');
 
@@ -28,3 +31,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('/users', UserController::class);
+

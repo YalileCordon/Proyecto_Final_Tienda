@@ -9,6 +9,24 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
+----------------------------------------------
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>{{ $product->name }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>{{ $product->description }}</p>
+                        <p>Categoría: {{ $product->category->name }}</p>
+                        <!-- Add more product details here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+-----------------------------------------------
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                         <div class="float-left">
                             <span class="card-title">{{ __('Show') }} Product</span>

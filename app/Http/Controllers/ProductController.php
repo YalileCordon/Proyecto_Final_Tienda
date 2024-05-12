@@ -149,9 +149,9 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id): View
+    public function show($slug): View
     {
-        $product = Product::find($id);
+        $product = Product::find($slug);
 
         return view('product.show', compact('product'));
     }
