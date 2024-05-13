@@ -19,7 +19,11 @@
                     </div>
 
                     <div class="card-body bg-white">
-                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="{{ $product->picture }}" alt="{{ $product->name }}" class="img-fluid">
+                            </div>
+                            <div class="col-md-8">
                                 <div class="form-group mb-2 mb20">
                                     <strong>Name:</strong>
                                     {{ $product->name }}
@@ -28,19 +32,9 @@
                                     <strong>Description:</strong>
                                     {{ $product->description }}
                                 </div>
-                                <div class="form-group mb-2 mb20">
-                                    <strong>Price:</strong>
-                                    {{ $product->price }}
-                                </div>
-                                <div class="form-group mb-2 mb20">
-                                    <strong>Picture:</strong>
-                                    {{ $product->picture }}
-                                </div>
-                                <div class="form-group mb-2 mb20">
-                                    <strong>Category Id:</strong>
-                                    {{ $product->category_id }}
-                                </div>
-
+                                <!-- Add other product details here -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

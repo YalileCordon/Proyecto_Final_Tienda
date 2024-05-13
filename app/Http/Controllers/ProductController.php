@@ -140,8 +140,17 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request): RedirectResponse
     {
-        Product::create($request->validated());
+        $data = $request->validated();
+        
+        if ($request->hasFile('picture')) {
+            $image = $request->file('picture');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $data['picture'] = '/images/' . $imageName;
+        }
 
+        Product::create($data);
+        
         return Redirect::route('products.index')
             ->with('success', 'Product created successfully.');
     }
