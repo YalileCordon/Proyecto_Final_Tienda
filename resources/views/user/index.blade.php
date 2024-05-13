@@ -15,12 +15,6 @@
                             <span id="card_title">
                                 {{ __('Users') }}
                             </span>
-
-                             <div class="float-right">
-                                <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
-                                </a>
-                              </div>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -38,7 +32,7 @@
                                         
 									<th >Name</th>
 									<th >Email</th>
-
+                                    <th>Is Admin</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -49,6 +43,8 @@
                                             
 										<td >{{ $user->name }}</td>
 										<td >{{ $user->email }}</td>
+                                        <td>{{ $user->is_admin ? __('Yes') : __('No') }}</td>
+                                        <th>Is Admin</th>
 
                                             <td>
                                                 <form action="{{ route('users.destroy', $user->id) }}" method="POST">

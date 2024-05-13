@@ -20,6 +20,9 @@ class UserController extends Controller
      */
     public function index(Request $request): View
     {
+        if (!auth()->user() || !auth()->user()->is_admin) {
+            return view('home');
+        }
         $users = User::paginate(3);
 
         return view('user.index', compact('users'))
@@ -31,6 +34,9 @@ class UserController extends Controller
      */
     public function create(): View
     {
+        if (!auth()->user() || !auth()->user()->is_admin) {
+            return view('home');
+        }
         $user = new User();
 
         return view('user.create', compact('user'));
@@ -41,6 +47,9 @@ class UserController extends Controller
      */
     public function store(UserRequest $request): RedirectResponse
     {
+        if (!auth()->user() || !auth()->user()->is_admin) {
+            return view('home');
+        }
         User::create($request->validated());
 
         return Redirect::route('users.index')
@@ -52,6 +61,9 @@ class UserController extends Controller
      */
     public function show($id): View
     {
+        if (!auth()->user() || !auth()->user()->is_admin) {
+            return view('home');
+        }
         $user = User::find($id);
 
         return view('user.show', compact('user'));
@@ -62,6 +74,9 @@ class UserController extends Controller
      */
     public function edit($id): View
     {
+        if (!auth()->user() || !auth()->user()->is_admin) {
+            return view('home');
+        }
         $user = User::find($id);
 
         return view('user.edit', compact('user'));
@@ -72,6 +87,9 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user): RedirectResponse
     {
+        if (!auth()->user() || !auth()->user()->is_admin) {
+            return view('home');
+        }
         $user->update($request->validated());
 
         return Redirect::route('users.index')
@@ -80,6 +98,9 @@ class UserController extends Controller
 
     public function destroy($id): RedirectResponse
     {
+        if (!auth()->user() || !auth()->user()->is_admin) {
+            return view('home');
+        }
         User::find($id)->delete();
 
         return Redirect::route('users.index')

@@ -16,7 +16,8 @@
                                 <option value="">All Categories</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}
-                                        ({{ $productCounts[$category->id] ?? 0 }})</option>
+                                        ({{ $productCounts[$category->id] ?? 0 }})
+                                    </option>
                                     {{-- <option value="{{ $category->id }}">{{ $category->name }}</option> --}}
                                 @endforeach
                             </select>
@@ -40,13 +41,16 @@
                             <span id="card_title">
                                 {{ __('Products') }}
                             </span>
-
-                            <div class="float-right">
-                                <a href="{{ route('products.create') }}" class="btn btn-primary btn-sm float-right"
-                                    data-placement="left">
-                                    {{ __('Create New') }}
-                                </a>
-                            </div>
+                            @auth
+                                @if (Auth::user()->is_admin)
+                                    <div class="float-right">
+                                        <a href="{{ route('products.create') }}" class="btn btn-primary btn-sm float-right"
+                                            data-placement="left">
+                                            {{ __('Create New') }}
+                                        </a>
+                                    </div>
+                                @endif
+                            @endauth
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -88,14 +92,19 @@
                                                     <a class="btn btn-sm btn-primary"
                                                         href="{{ route('products.show', $product->slug) }}"><i
                                                             class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('products.edit', $product->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"
-                                                        onclick="event.preventDefault(); confirm('Are you sure to delete?') ? this.closest('form').submit() : false;"><i
-                                                            class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+
+                                                    @auth
+                                                        @if (Auth::user()->is_admin)
+                                                            <a class="btn btn-sm btn-success"
+                                                                href="{{ route('products.edit', $product->id) }}"><i
+                                                                    class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                                onclick="event.preventDefault(); confirm('Are you sure to delete?') ? this.closest('form').submit() : false;"><i
+                                                                    class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                        @endif
+                                                    @endauth
                                                 </form>
                                             </td>
                                         </tr>

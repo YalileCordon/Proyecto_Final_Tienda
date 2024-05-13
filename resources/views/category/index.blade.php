@@ -15,12 +15,16 @@
                             <span id="card_title">
                                 {{ __('Categories') }}
                             </span>
-
-                             <div class="float-right">
-                                <a href="{{ route('categories.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
-                                </a>
-                              </div>
+                            @auth
+                                @if (Auth::user()->is_admin)
+                                    <div class="float-right">
+                                        <a href="{{ route('categories.create') }}" class="btn btn-primary btn-sm float-right"
+                                            data-placement="left">
+                                            {{ __('Create New') }}
+                                        </a>
+                                    </div>
+                                @endif
+                            @endauth
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -35,9 +39,9 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        
-									<th >Name</th>
-									<th >Description</th>
+
+                                        <th>Name</th>
+                                        <th>Description</th>
 
                                         <th></th>
                                     </tr>
@@ -46,17 +50,29 @@
                                     @foreach ($categories as $category)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            
-										<td >{{ $category->name }}</td>
-										<td >{{ $category->description }}</td>
+
+                                            <td>{{ $category->name }}</td>
+                                            <td>{{ $category->description }}</td>
 
                                             <td>
-                                                <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('categories.show', $category->slug) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('categories.edit', $category->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="event.preventDefault(); confirm('Are you sure to delete?') ? this.closest('form').submit() : false;"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                <form action="{{ route('categories.destroy', $category->id) }}"
+                                                    method="POST">
+                                                    <a class="btn btn-sm btn-primary "
+                                                        href="{{ route('categories.show', $category->slug) }}"><i
+                                                            class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+
+                                                    @auth
+                                                        @if (Auth::user()->is_admin)
+                                                            <a class="btn btn-sm btn-success"
+                                                                href="{{ route('categories.edit', $category->id) }}"><i
+                                                                    class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                                onclick="event.preventDefault(); confirm('Are you sure to delete?') ? this.closest('form').submit() : false;"><i
+                                                                    class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                        @endif
+                                                    @endauth
                                                 </form>
                                             </td>
                                         </tr>
@@ -66,7 +82,7 @@
                         </div>
                     </div>
                 </div>
-            {!! $categories->onEachSide(1)->links('pagination::bootstrap-4') !!}
+                {!! $categories->onEachSide(1)->links('pagination::bootstrap-4') !!}
             </div>
         </div>
     </div>

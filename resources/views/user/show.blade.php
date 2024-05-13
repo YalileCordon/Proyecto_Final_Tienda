@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $user->name ?? __('Show') . " " . __('User') }}
+    {{ $user->name ?? __('Show') . ' ' . __('User') }}
 @endsection
 
 @section('content')
@@ -19,15 +19,19 @@
                     </div>
 
                     <div class="card-body bg-white">
-                        
-                                <div class="form-group mb-2 mb20">
-                                    <strong>Name:</strong>
-                                    {{ $user->name }}
-                                </div>
-                                <div class="form-group mb-2 mb20">
-                                    <strong>Email:</strong>
-                                    {{ $user->email }}
-                                </div>
+
+                        <div class="form-group mb-2 mb20">
+                            <strong>Name:</strong>
+                            {{ $user->name }}
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Email:</strong>
+                            {{ $user->email }}
+                        </div>
+                        <div class="form-group mb-2 mb20"> <!-- Nuevo div -->
+                            <strong>Is Admin:</strong>
+                            {{ $user->is_admin ? __('Yes') : __('No') }}
+                        </div>
 
                     </div>
                 </div>
