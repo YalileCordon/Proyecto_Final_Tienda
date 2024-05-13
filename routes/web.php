@@ -13,21 +13,20 @@ Route::resource('/', ProductController::class);
 
 Auth::routes();
 
-// Route::get('/products', [ProductController::class, 'show'])->name('products.show');
+Route::resource('products',ProductController::class)->except('show');
 
 Route::get('/products/by-category', [ProductController::class, 'showByCategory'])->name('products.showByCategory');
 
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 
+Route::resource('categories', CategoryController::class)->except('show');
+
 Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('categories.show');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('products',ProductController::class)->except('show');
-
 Route::post('/password/reset', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.update');
 
-Route::resource('categories', CategoryController::class)->except('show');
 
 Auth::routes();
 
