@@ -21,9 +21,11 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->word;
         return [
-            'name' => $this->faker->word,
+            'name' => $name,
             'description' => $this->faker->sentence,
+            'slug' => \Illuminate\Support\Str::slug($name) . '-' . rand(1000, 9999),
         ];
     }
 }

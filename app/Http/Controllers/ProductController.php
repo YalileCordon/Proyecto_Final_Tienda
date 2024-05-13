@@ -151,7 +151,7 @@ class ProductController extends Controller
      */
     public function show($slug): View
     {
-        $product = Product::find($slug);
+        $product = Product::where('slug', $slug)->firstOrFail();
 
         return view('product.show', compact('product'));
     }

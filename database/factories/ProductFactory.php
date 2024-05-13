@@ -21,8 +21,11 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->word;
+
         return [
-            'name' => $this->faker->word,
+            'name' => $name,
+            'slug' => \Illuminate\Support\Str::slug($name) . '-' . rand(1000, 9999),
             'description' => $this->faker->sentence,
             'price' => $this->faker->randomFloat(2, 10, 1000),
             'picture' => $this->faker->imageUrl(),

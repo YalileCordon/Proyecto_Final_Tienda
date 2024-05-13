@@ -55,9 +55,9 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id): View
+    public function show($slug): View
     {
-        $category = Category::find($id);
+        $category = Category::where('slug', $slug)->firstOrFail();
 
         return view('category.show', compact('category'));
     }
